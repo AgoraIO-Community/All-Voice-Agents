@@ -5,8 +5,10 @@
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
-    "dev:backend": "turbo run dev --filter=backend",
-    "dev:frontend": "turbo run dev --filter=frontend",
+    "dev:backend": "turbo run dev --filter=@voice-agents/elevenlabs-backend",
+    "dev:elevenlabs": "turbo run dev --filter=@voice-agents/elevenlabs --filter=@voice-agents/elevenlabs-backend",
+    "dev:frontend": "turbo run dev --filter=@voice-agents/portal --filter=@voice-agents/elevenlabs",
+    "dev:portal": "turbo run dev --filter=@voice-agents/portal",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "start": "turbo run start",
@@ -23,7 +25,7 @@
   "workspaces": [
     "portal",
     "elevenlabs/frontend",
-    "apps/*",
+    "elevenlabs/backend",
     "packages/*"
   ]
 }
