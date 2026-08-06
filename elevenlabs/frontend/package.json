@@ -13,6 +13,7 @@
   "dependencies": {
     "@elevenlabs/react": "^1.12.0",
     "@repo/provider-navigation": "*",
+    "@vercel/microfrontends": "^2.4.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"
   },

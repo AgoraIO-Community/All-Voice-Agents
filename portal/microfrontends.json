@@ -1,0 +1,26 @@
+{
+  "$schema": "https://openapi.vercel.sh/microfrontends.json",
+  "applications": {
+    "all-voice-agents-portal": {
+      "packageName": "@voice-agents/portal",
+      "development": {
+        "fallback": "http://127.0.0.1:5173",
+        "local": 5173
+      }
+    },
+    "all-voice-agents-elevenlabs": {
+      "packageName": "@voice-agents/elevenlabs",
+      "development": {
+        "local": 5174
+      },
+      "routing": [
+        {
+          "paths": ["/11labs", "/11labs/:path*"]
+        }
+      ]
+    }
+  },
+  "options": {
+    "localProxyPort": 3024
+  }
+}
