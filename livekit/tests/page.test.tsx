@@ -51,13 +51,13 @@ describe("voice agent console", () => {
     expect(prompt).toHaveValue("You are a custom agent.");
   });
 
-  it("loads APIs from the LiveKit base path", async () => {
+  it("loads APIs from the standalone LiveKit origin", async () => {
     const fetchMock = vi.fn(async (input: RequestInfo | URL) => {
       const url = String(input);
-      if (url === "/livekit/api/catalog") {
+      if (url === "/api/catalog") {
         return Response.json({ vendors: vendorCatalog, credentialProfiles: [] });
       }
-      if (url === "/livekit/api/configs") {
+      if (url === "/api/configs") {
         return Response.json({ configs: [defaultAgentConfig] });
       }
       return Response.json({});
@@ -67,8 +67,8 @@ describe("voice agent console", () => {
     render(<Home />);
 
     await waitFor(() => {
-      expect(fetchMock).toHaveBeenCalledWith("/livekit/api/catalog");
-      expect(fetchMock).toHaveBeenCalledWith("/livekit/api/configs");
+      expect(fetchMock).toHaveBeenCalledWith("/api/catalog");
+      expect(fetchMock).toHaveBeenCalledWith("/api/configs");
     });
   });
 });

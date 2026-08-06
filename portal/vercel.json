@@ -1,6 +1,22 @@
 {
   "rewrites": [
     {
+      "source": "/livekit",
+      "destination": "https://livekit-voiceagent.vercel.app/"
+    },
+    {
+      "source": "/livekit/:path*",
+      "destination": "https://livekit-voiceagent.vercel.app/:path*"
+    },
+    {
+      "source": "/api/:path*",
+      "destination": "https://livekit-voiceagent.vercel.app/api/:path*"
+    },
+    {
+      "source": "/icon.svg",
+      "destination": "https://livekit-voiceagent.vercel.app/icon.svg"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
     }

@@ -12,10 +12,8 @@ type SessionResponse = {
 };
 type TranscriptTurn = { id: string; role: "user" | "agent"; text: string; at: string; final: boolean };
 
-const APP_BASE_PATH = "/livekit";
-
 function apiUrl(path: `/api/${string}`) {
-  return `${APP_BASE_PATH}${path}`;
+  return path;
 }
 
 function formatTurnTime(at: string) {

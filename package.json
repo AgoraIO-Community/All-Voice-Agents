@@ -4,7 +4,7 @@
   "packageManager": "npm@10.8.2",
   "scripts": {
     "build": "turbo run build",
-    "dev": "concurrently --kill-others-on-fail --names proxy,portal,elevenlabs,livekit,backend \"npm run dev:proxy\" \"npm run dev:portal:app\" \"npm run dev:elevenlabs:app\" \"npm run dev:livekit:app\" \"npm run dev:backend\"",
+    "dev": "concurrently --kill-others-on-fail --names proxy,portal,elevenlabs,backend \"npm run dev:proxy\" \"npm run dev:portal:app\" \"npm run dev:elevenlabs:app\" \"npm run dev:backend\"",
     "dev:backend": "npm run dev --workspace @voice-agents/elevenlabs-backend",
     "dev:elevenlabs": "concurrently --kill-others-on-fail --names proxy,elevenlabs,backend \"npm run dev:proxy\" \"npm run dev:elevenlabs:app\" \"npm run dev:backend\"",
     "dev:elevenlabs:app": "npm run dev --workspace @voice-agents/elevenlabs",
@@ -12,7 +12,7 @@
     "dev:frontend": "concurrently --kill-others-on-fail --names proxy,portal,elevenlabs \"npm run dev:proxy\" \"npm run dev:portal:app\" \"npm run dev:elevenlabs:app\"",
     "dev:portal": "concurrently --kill-others-on-fail --names proxy,portal \"npm run dev:proxy\" \"npm run dev:portal:app\"",
     "dev:portal:app": "npm run dev --workspace @voice-agents/portal",
-    "dev:proxy": "microfrontends proxy portal/microfrontends.json --local-apps all-voice-agents-portal all-voice-agents-elevenlabs all-voice-agents-livekit",
+    "dev:proxy": "microfrontends proxy portal/microfrontends.json --local-apps all-voice-agents-portal all-voice-agents-elevenlabs",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "start": "turbo run start",
