@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 const PROVIDERS = [
-  { href: "/11labs", label: "ElevenLabs" },
+  { href: "https://all-voice-agents.vercel.app/11labs", label: "ElevenLabs" },
   { href: "https://livekit-voiceagent.vercel.app/", label: "LiveKit" },
   { href: "/vapi", label: "Vapi" },
   { href: "/agora", label: "Agora" },
