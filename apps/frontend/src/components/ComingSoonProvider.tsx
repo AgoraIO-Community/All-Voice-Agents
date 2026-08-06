@@ -1,8 +1,7 @@
-import type { ProviderDefinition } from "../app/providerCatalog";
+import type { ProviderDefinition } from "@repo/provider-navigation";
 
 interface ComingSoonProviderProps {
   provider: ProviderDefinition;
-  onNavigate: (path: string) => void;
 }
 
 const ArrowLeftIcon: React.FC = () => (
@@ -19,7 +18,6 @@ const ArrowRightIcon: React.FC = () => (
 
 const ComingSoonProvider: React.FC<ComingSoonProviderProps> = ({
   provider,
-  onNavigate,
 }: ComingSoonProviderProps) => {
   return (
     <main className="coming-soon">
@@ -31,18 +29,17 @@ const ComingSoonProvider: React.FC<ComingSoonProviderProps> = ({
         <h1>{provider.name}</h1>
         <p>{provider.description}</p>
         <div className="coming-soon__actions">
-          <button onClick={() => onNavigate("/")} type="button">
+          <a href="/">
             <ArrowLeftIcon />
             Back to all providers
-          </button>
-          <button
+          </a>
+          <a
             className="coming-soon__primary"
-            onClick={() => onNavigate("/11labs")}
-            type="button"
+            href="/11labs"
           >
             Try ElevenLabs
             <ArrowRightIcon />
-          </button>
+          </a>
         </div>
       </section>
       <p className="coming-soon__note">

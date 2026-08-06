@@ -1,49 +1,3 @@
-:root {
-  --shell-bg: #111410;
-  --shell-surface: #1a1e18;
-  --shell-surface-raised: #23281f;
-  --shell-text: #f5f2ea;
-  --shell-muted: #9da394;
-  --shell-accent: #d3f36b;
-  --shell-border: rgba(255, 255, 255, 0.1);
-  --provider-header-height: 64px;
-  color: var(--shell-text);
-  background: var(--shell-bg);
-  font-family:
-    "Avenir Next", Avenir, "Helvetica Neue", Helvetica, sans-serif;
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-}
-
-* {
-  box-sizing: border-box;
-}
-
-html,
-body,
-#root {
-  min-width: 320px;
-  width: 100%;
-  min-height: 100%;
-  margin: 0;
-}
-
-body {
-  min-height: 100dvh;
-  overflow: hidden;
-  background: var(--shell-bg);
-}
-
-button {
-  color: inherit;
-  font: inherit;
-}
-
-button:focus-visible {
-  outline: 3px solid var(--shell-accent);
-  outline-offset: 4px;
-}
-
 .provider-home {
   position: relative;
   display: grid;
@@ -157,6 +111,8 @@ button:focus-visible {
   overflow: hidden;
   border: 1px solid var(--shell-border);
   border-radius: 18px;
+  color: inherit;
+  text-decoration: none;
   text-align: left;
   background: rgba(26, 30, 24, 0.9);
   cursor: pointer;
@@ -258,115 +214,6 @@ button:focus-visible {
   transform: translate(2px, -2px);
 }
 
-.provider-shell {
-  display: grid;
-  grid-template-rows: var(--provider-header-height) minmax(0, 1fr);
-  width: 100%;
-  height: 100dvh;
-  overflow: hidden;
-  background: var(--shell-bg);
-}
-
-.provider-shell__header {
-  position: relative;
-  z-index: 20;
-  display: flex;
-  align-items: center;
-  gap: 22px;
-  min-width: 0;
-  padding: 0 clamp(16px, 3vw, 34px);
-  border-bottom: 1px solid var(--shell-border);
-  background: rgba(17, 20, 16, 0.97);
-}
-
-.provider-shell__brand,
-.provider-shell__home,
-.provider-tabs__button {
-  border: 0;
-  background: transparent;
-  cursor: pointer;
-}
-
-.provider-shell__brand {
-  flex: 0 0 auto;
-  padding: 10px 0;
-  font-size: 0.86rem;
-  font-weight: 800;
-  letter-spacing: -0.035em;
-}
-
-.provider-shell__home {
-  flex: 0 0 auto;
-  padding: 9px 0;
-  color: var(--shell-muted);
-  font-size: 0.7rem;
-  font-weight: 700;
-}
-
-.provider-shell__home:hover {
-  color: var(--shell-text);
-}
-
-.provider-tabs {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  min-width: 0;
-  margin-left: auto;
-  overflow-x: auto;
-  scrollbar-width: none;
-}
-
-.provider-tabs::-webkit-scrollbar {
-  display: none;
-}
-
-.provider-tabs__button {
-  flex: 0 0 auto;
-  padding: 9px 13px;
-  border-radius: 999px;
-  color: #81887c;
-  font-size: 0.67rem;
-  font-weight: 750;
-  transition:
-    color 150ms ease,
-    background 150ms ease;
-}
-
-.provider-tabs__button:hover {
-  color: var(--shell-text);
-  background: rgba(255, 255, 255, 0.06);
-}
-
-.provider-tabs__button--active {
-  color: #18200d;
-  background: var(--shell-accent);
-}
-
-.provider-tabs__button--active:hover {
-  color: #18200d;
-  background: #defb80;
-}
-
-.provider-shell__content {
-  position: relative;
-  min-width: 0;
-  min-height: 0;
-  overflow: hidden;
-}
-
-.provider-loading {
-  display: grid;
-  place-items: center;
-  width: 100%;
-  height: 100%;
-  color: var(--shell-muted);
-  font-size: 0.72rem;
-  font-weight: 750;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-}
-
 .coming-soon {
   position: relative;
   display: grid;
@@ -459,7 +306,7 @@ button:focus-visible {
   margin-top: 34px;
 }
 
-.coming-soon__actions button {
+.coming-soon__actions a {
   display: inline-flex;
   align-items: center;
   gap: 9px;
@@ -472,9 +319,10 @@ button:focus-visible {
   font-size: 0.72rem;
   font-weight: 750;
   cursor: pointer;
+  text-decoration: none;
 }
 
-.coming-soon__actions button:hover {
+.coming-soon__actions a:hover {
   border-color: rgba(255, 255, 255, 0.28);
   background: var(--shell-surface-raised);
 }
@@ -507,10 +355,6 @@ button:focus-visible {
 }
 
 @media (max-width: 760px) {
-  :root {
-    --provider-header-height: 58px;
-  }
-
   .provider-home {
     overflow-y: auto;
   }
@@ -550,19 +394,6 @@ button:focus-visible {
     padding: 20px;
   }
 
-  .provider-shell__header {
-    gap: 14px;
-    padding: 0 14px;
-  }
-
-  .provider-shell__home {
-    display: none;
-  }
-
-  .provider-tabs__button {
-    padding: 8px 11px;
-  }
-
   .coming-soon {
     place-items: start;
     padding: 72px 24px 30px;
@@ -582,14 +413,5 @@ button:focus-visible {
     right: 20px;
     bottom: 18px;
     left: 20px;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    scroll-behavior: auto !important;
-    transition-duration: 0.01ms !important;
   }
 }

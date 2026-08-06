@@ -1,4 +1,4 @@
-import type { ProviderId } from "./providerCatalog";
+import type { ProviderId } from "@repo/provider-navigation";
 
 export type AppRoute =
   | { kind: "home" }

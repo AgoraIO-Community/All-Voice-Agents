@@ -1,10 +1,9 @@
 import { lazy, Suspense, useEffect, useState } from "react";
+import { getProvider, ProviderShell } from "@repo/provider-navigation";
 import { getAppRoute } from "./app/appRoute";
 import { navigateTo } from "./app/navigate";
-import { getProvider } from "./app/providerCatalog";
 import ComingSoonProvider from "./components/ComingSoonProvider";
 import ProviderHome from "./components/ProviderHome";
-import ProviderLayout from "./components/ProviderLayout";
 import "./App.css";
 
 const ElevenLabsExperience = lazy(() =>
@@ -28,16 +27,13 @@ export function App() {
   }, []);
 
   if (route.kind === "home") {
-    return <ProviderHome onNavigate={navigateTo} />;
+    return <ProviderHome />;
   }
 
   const provider = getProvider(route.providerId);
 
   return (
-    <ProviderLayout
-      activeProviderId={provider.id}
-      onNavigate={navigateTo}
-    >
+    <ProviderShell activeProviderId={provider.id}>
       {provider.id === "11labs" ? (
         <Suspense
           fallback={(
@@ -52,8 +48,8 @@ export function App() {
           />
         </Suspense>
       ) : (
-        <ComingSoonProvider provider={provider} onNavigate={navigateTo} />
+        <ComingSoonProvider provider={provider} />
       )}
-    </ProviderLayout>
+    </ProviderShell>
   );
 }

@@ -1,8 +1,4 @@
-import { PROVIDERS } from "../app/providerCatalog";
-
-interface ProviderHomeProps {
-  onNavigate: (path: string) => void;
-}
+import { PROVIDERS } from "@repo/provider-navigation";
 
 const ArrowUpRightIcon: React.FC = () => (
   <svg
@@ -16,9 +12,7 @@ const ArrowUpRightIcon: React.FC = () => (
   </svg>
 );
 
-const ProviderHome: React.FC<ProviderHomeProps> = ({
-  onNavigate,
-}: ProviderHomeProps) => {
+const ProviderHome: React.FC = () => {
   return (
     <main className="provider-home">
       <header className="provider-home__nav">
@@ -41,15 +35,14 @@ const ProviderHome: React.FC<ProviderHomeProps> = ({
             const isReady = provider.status === "ready";
 
             return (
-              <button
+              <a
                 className={
                   isReady
                     ? "provider-card provider-card--ready"
                     : "provider-card"
                 }
+                href={provider.path}
                 key={provider.id}
-                onClick={() => onNavigate(provider.path)}
-                type="button"
               >
                 <span className="provider-card__topline">
                   <strong>{provider.name}</strong>
@@ -70,7 +63,7 @@ const ProviderHome: React.FC<ProviderHomeProps> = ({
                   {isReady ? "Open /11labs" : `View ${provider.name}`}
                   <ArrowUpRightIcon />
                 </span>
-              </button>
+              </a>
             );
           })}
         </section>
