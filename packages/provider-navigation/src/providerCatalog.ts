@@ -20,9 +20,9 @@ export const PROVIDERS: readonly ProviderDefinition[] = [
   {
     id: "livekit",
     name: "LiveKit",
-    description: "Real-time agent framework comparison slot.",
+    description: "Configure and run a real-time LiveKit voice agent.",
     path: "/livekit",
-    status: "coming-soon",
+    status: "ready",
   },
   {
     id: "vapi",

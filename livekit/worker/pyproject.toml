@@ -1,0 +1,17 @@
+[project]
+name = "voice-agent-worker"
+version = "0.1.0"
+requires-python = ">=3.10"
+dependencies = [
+  "livekit-agents~=1.5",
+  "livekit-plugins-ai-coustics~=0.2",
+  "python-dotenv>=1.0",
+]
+
+[project.optional-dependencies]
+test = ["pytest>=8.0"]
+openai = ["livekit-agents[openai]~=1.5"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]

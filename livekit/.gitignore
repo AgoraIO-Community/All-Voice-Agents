@@ -1,0 +1,46 @@
+# Dependencies
+node_modules/
+worker/.venv/
+
+# Build outputs
+.next/
+out/
+dist/
+build/
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Test and coverage artifacts
+coverage/
+.coverage
+.pytest_cache/
+htmlcov/
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# TypeScript and framework cache
+*.tsbuildinfo
+.turbo/
+
+# OS and editor files
+.DS_Store
+.idea/
+.vscode/
+
+# Lavish local review artifacts
+.lavish/
+
+# Playwright MCP artifacts
+.playwright-mcp/

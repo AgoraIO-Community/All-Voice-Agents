@@ -18,6 +18,17 @@
           "paths": ["/11labs", "/11labs/:path*"]
         }
       ]
+    },
+    "all-voice-agents-livekit": {
+      "packageName": "livekit-voice-agent-console",
+      "development": {
+        "local": 5175
+      },
+      "routing": [
+        {
+          "paths": ["/livekit", "/livekit/:path*"]
+        }
+      ]
     }
   },
   "options": {
