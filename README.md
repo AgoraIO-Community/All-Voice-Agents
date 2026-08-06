@@ -17,14 +17,16 @@ The homepage at `/` shows all four providers. Shared tabs use normal links so mo
 
 ```text
 portal/                       Comparison homepage and placeholder routes
+  api/                        Same-origin Vercel Functions
 elevenlabs/
   frontend/                   Vite/React ElevenLabs application
-  backend/                    Node API for signed conversation URLs
+  backend/                    Local-development and Railway-rollback Node API
   prompts/                    Maya and Aarav prompt documentation
 livekit/                      Reserved independent provider root
 vapi/                         Reserved independent provider root
 agora/                        Reserved independent provider root
 packages/
+  elevenlabs-server/          Shared server-only ElevenLabs signing logic
   provider-navigation/        Shared provider catalog, header, and tabs
   eslint-config/              Shared lint configuration
   typescript-config/          Shared TypeScript configuration
@@ -50,9 +52,9 @@ cp .env.example .env
 Fill in the local file without committing it:
 
 ```dotenv
-ELEVENLABS_API_KEY=your-api-key
-ELEVENLABS_AGENT_ID=agent_xxxxx
-ELEVENLABS_CONCIERGE_AGENT_ID=agent_yyyyy
+ELEVENLABS_API_KEY=
+ELEVENLABS_AGENT_ID=
+ELEVENLABS_CONCIERGE_AGENT_ID=
 VITE_API_URL=http://127.0.0.1:4000
 ```
 
@@ -95,13 +97,19 @@ The frontend owns:
 - `/11labs/concierge` — Aarav hotel concierge
 - `/11labs/concierge/call` — Aarav call screen
 
-The backend exposes:
+Production:
+
+```text
+POST https://all-voice-agents.vercel.app/api/voice/session
+```
+
+The local-development and Railway fallback backend exposes:
 
 - `GET /health`
 - `GET /api/voice/providers`
 - `POST /api/voice/session`
 
-The browser sends `maya` or `aarav` to the session endpoint. The backend uses the private API key and agent IDs to obtain a signed conversation URL; those secrets are never included in the browser bundle.
+The browser sends `maya` or `aarav` to the session endpoint. Both the production Vercel Function and fallback backend use `@repo/elevenlabs-server`, so validation and signing behavior remain consistent. The server uses the private API key and agent IDs to obtain a signed conversation URL; those secrets are never included in the browser bundle.
 
 ## Environment ownership
 
@@ -109,8 +117,9 @@ The root `.env.example` is the canonical inventory of local variable names. The 
 
 Deployment variables remain scoped to the application that consumes them:
 
-- ElevenLabs frontend on Vercel: `VITE_API_URL` only, set to the Railway backend URL.
-- ElevenLabs backend on Railway: `ELEVENLABS_API_KEY`, `ELEVENLABS_AGENT_ID`, `ELEVENLABS_CONCIERGE_AGENT_ID`, and production `CORS_ORIGIN`.
+- `all-voice-agents-portal` on Vercel: `ELEVENLABS_API_KEY`, `ELEVENLABS_AGENT_ID`, and `ELEVENLABS_CONCIERGE_AGENT_ID` for Preview and Production.
+- `all-voice-agents-elevenlabs` on Vercel: `VITE_API_URL` only when intentionally overriding same-origin behavior for rollback.
+- ElevenLabs backend on Railway: retain `ELEVENLABS_API_KEY`, `ELEVENLABS_AGENT_ID`, `ELEVENLABS_CONCIERGE_AGENT_ID`, and `CORS_ORIGIN` while the fallback deployment remains active.
 - Future provider projects: only that provider's public configuration and secrets.
 
 Do not expose server secrets with a `VITE_` prefix. Vite embeds prefixed variables into the browser bundle.
@@ -122,8 +131,9 @@ This repository is prepared for two frontend projects in one Enterprise Microfro
 1. Create `all-voice-agents-portal` with root directory `portal`.
 2. Create `all-voice-agents-elevenlabs` with root directory `elevenlabs/frontend`.
 3. Add both projects to the same Microfrontends group and make the portal the default application.
-4. Set `VITE_API_URL` on the ElevenLabs project to the deployed Railway backend URL.
-5. Deploy both projects, validate the shared Preview domain, and then attach the production domain to the group.
+4. Add `ELEVENLABS_API_KEY`, `ELEVENLABS_AGENT_ID`, and `ELEVENLABS_CONCIERGE_AGENT_ID` to the portal project for Preview and Production.
+5. Leave `VITE_API_URL` unset on the ElevenLabs project for normal same-origin production requests. Set it to the Railway backend URL only for an intentional rollback.
+6. Deploy both projects, validate `POST /api/voice/session` on the shared Preview domain, and then attach the production domain to the group.
 
 The routing rules live in `portal/microfrontends.json`. They send `/11labs` and `/11labs/:path*` to the ElevenLabs project; all other current routes fall back to the portal.
 
