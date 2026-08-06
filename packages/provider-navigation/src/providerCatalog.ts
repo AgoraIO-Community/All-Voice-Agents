@@ -6,6 +6,7 @@ export interface ProviderDefinition {
   name: string;
   description: string;
   path: `/${ProviderId}`;
+  href?: string;
   status: ProviderStatus;
 }
 
@@ -22,6 +23,7 @@ export const PROVIDERS: readonly ProviderDefinition[] = [
     name: "LiveKit",
     description: "Configure and run a real-time LiveKit voice agent.",
     path: "/livekit",
+    href: "https://livekit-voiceagent.vercel.app/",
     status: "ready",
   },
   {

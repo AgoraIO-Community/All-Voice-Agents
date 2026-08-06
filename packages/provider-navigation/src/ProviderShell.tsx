@@ -29,7 +29,7 @@ export const ProviderShell: React.FC<ProviderShellProps> = ({
                   ? "provider-tabs__link provider-tabs__link--active"
                   : "provider-tabs__link"
               }
-              href={provider.path}
+              href={provider.href ?? provider.path}
               key={provider.id}
             >
               {provider.name}
