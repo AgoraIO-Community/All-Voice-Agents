@@ -10,8 +10,11 @@ export type VoiceSessionResponse = {
 };
 
 const configuredApiUrl = import.meta.env.VITE_API_URL?.trim().replace(/\/+$/, "");
+const isLocalHostname =
+  window.location.hostname === "127.0.0.1" ||
+  window.location.hostname === "localhost";
 const API_URL =
-  configuredApiUrl || (import.meta.env.DEV ? "http://127.0.0.1:4000" : "");
+  configuredApiUrl || (isLocalHostname ? "http://127.0.0.1:4000" : "");
 
 async function fetchJson<T>(
   path: string,
