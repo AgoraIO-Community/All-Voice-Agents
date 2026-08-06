@@ -1,6 +1,46 @@
 {
   "rewrites": [
     {
+      "source": "/livekit",
+      "destination": "https://livekit-voiceagent.vercel.app/"
+    },
+    {
+      "source": "/livekit/:path*",
+      "destination": "https://livekit-voiceagent.vercel.app/:path*"
+    },
+    {
+      "source": "/_next/:path*",
+      "destination": "https://livekit-voiceagent.vercel.app/_next/:path*"
+    },
+    {
+      "source": "/api/catalog",
+      "destination": "https://livekit-voiceagent.vercel.app/api/catalog"
+    },
+    {
+      "source": "/api/catalog/:path*",
+      "destination": "https://livekit-voiceagent.vercel.app/api/catalog/:path*"
+    },
+    {
+      "source": "/api/configs",
+      "destination": "https://livekit-voiceagent.vercel.app/api/configs"
+    },
+    {
+      "source": "/api/configs/:path*",
+      "destination": "https://livekit-voiceagent.vercel.app/api/configs/:path*"
+    },
+    {
+      "source": "/api/sessions",
+      "destination": "https://livekit-voiceagent.vercel.app/api/sessions"
+    },
+    {
+      "source": "/api/sessions/:path*",
+      "destination": "https://livekit-voiceagent.vercel.app/api/sessions/:path*"
+    },
+    {
+      "source": "/icon.svg",
+      "destination": "https://livekit-voiceagent.vercel.app/icon.svg"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
     }
