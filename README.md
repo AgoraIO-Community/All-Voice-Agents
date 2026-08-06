@@ -1,74 +1,92 @@
-# Full-stack Turborepo
+# All Voice Agents
 
-This repo contains a Vite React frontend and a Node.js TypeScript backend.
+Voice Stack Lab is a single place to launch and compare conversational voice-agent implementations. The first release includes the working Project Paneer experience on ElevenLabs and reserved routes for LiveKit, Vapi, and Agora.
 
-## Apps
+## Provider status
 
-- `apps/frontend`: React + Vite + TypeScript, served on port `5173`
-- `apps/backend`: Node.js + TypeScript API, served on port `4000`
-- `apps/backend/src/voice.ts`: voice vendor registry with ElevenLabs configured and Pipecat reserved
+| Provider | Route | Status |
+| --- | --- | --- |
+| ElevenLabs | `/11labs` | Ready |
+| LiveKit | `/livekit` | Coming soon |
+| Vapi | `/vapi` | Coming soon |
+| Agora | `/agora` | Coming soon |
 
-## Start development
+The homepage at `/` presents all four providers. A shared header remains available on every provider route.
+
+## ElevenLabs routes
+
+The copied Paneer experience is isolated under `apps/frontend/src/providers/11labs` and uses these routes:
+
+- `/11labs` and `/11labs/explore` — Maya vacation explorer
+- `/11labs/explore/call` — Maya call screen
+- `/11labs/concierge` — Aarav hotel concierge
+- `/11labs/concierge/call` — Aarav call screen
+
+## Architecture
+
+This repository is an npm Turborepo with:
+
+- `apps/frontend` — React 19, Vite, TypeScript, and the ElevenLabs browser SDK on port `5173`
+- `apps/backend` — Node.js TypeScript API for signed ElevenLabs session URLs on port `4000`
+- `packages/*` — shared TypeScript and ESLint workspace configuration
+
+The ElevenLabs SDK and large Paneer images are loaded only after opening an ElevenLabs route. API keys remain on the backend; the browser receives only a signed conversation URL.
+
+## Local setup
 
 Install dependencies:
 
-```sh
+```bash
 npm install
 ```
 
-Create local environment variables:
+Create local environment files from the safe examples:
 
-```sh
+```bash
 cp .env.example .env
+cp apps/frontend/.env.example apps/frontend/.env
 ```
 
-Add your ElevenLabs key and the agent IDs you configured in ElevenLabs to `.env`:
+Configure the backend `.env`:
 
-```sh
+```dotenv
 ELEVENLABS_API_KEY=your-api-key
 ELEVENLABS_AGENT_ID=agent_xxxxx
 ELEVENLABS_CONCIERGE_AGENT_ID=agent_yyyyy
 ```
 
-The backend does not create or override agents. Explore uses `ELEVENLABS_AGENT_ID`, Concierge uses `ELEVENLABS_CONCIERGE_AGENT_ID`, and both are used only to request signed conversation URLs. The user talks to each ElevenLabs agent exactly as configured in the ElevenLabs dashboard.
+`HOST`, `PORT`, and `CORS_ORIGIN` are optional. The backend defaults to
+`127.0.0.1:4000` and allows local development when they are omitted.
 
-Run both apps:
+The frontend example points to the local backend:
 
-```sh
+```dotenv
+VITE_API_URL=http://127.0.0.1:4000
+```
+
+Start both workspaces:
+
+```bash
 npm run dev
 ```
 
-Open the frontend at [http://127.0.0.1:5173](http://127.0.0.1:5173).
-
-The backend exposes:
-
-- [http://127.0.0.1:4000/health](http://127.0.0.1:4000/health)
-- [http://127.0.0.1:4000/api/voice/providers](http://127.0.0.1:4000/api/voice/providers)
-
-## Voice vendors
-
-The frontend talks to a small provider layer instead of calling ElevenLabs directly:
-
-- `elevenlabs`: configured now using signed URLs from the backend
-- `pipecat`: listed as a disabled provider for future implementation
-
-The browser never receives `ELEVENLABS_API_KEY`.
-The browser starts sessions with the signed URL only; prompt, voice, model, first message, tools, and turn settings all come from the hosted ElevenLabs agent.
-
-## Deploy environment
-
-Set `CORS_ORIGIN` on the backend to the exact frontend origins that can call it. Use comma-separated origins and no trailing slash:
-
-```sh
-CORS_ORIGIN=https://www.localhost8080.online,https://project-paneer-frontend-enz7.vercel.app
-```
+Open [http://127.0.0.1:5173](http://127.0.0.1:5173).
 
 ## Useful commands
 
-```sh
+```bash
 npm run dev:frontend
 npm run dev:backend
-npm run build
-npm run lint
 npm run check-types
+npm run lint
+npm run build
+npm run start
 ```
+
+## Backend endpoints
+
+- `GET /health`
+- `GET /api/voice/providers`
+- `POST /api/voice/session`
+
+`POST /api/voice/session` accepts `elevenlabs` with agent `maya` or `aarav`. LiveKit, Vapi, and Agora do not call the backend until their integrations are implemented.

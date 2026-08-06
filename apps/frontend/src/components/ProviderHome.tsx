@@ -76,10 +76,6 @@ const ProviderHome: React.FC<ProviderHomeProps> = ({
         </section>
       </div>
 
-      <footer className="provider-home__footer">
-        <span>One experience.</span>
-        <span>Four ways to build it.</span>
-      </footer>
     </main>
   );
 };
