@@ -1,8 +1,13 @@
 {
+  "outputDirectory": "dist",
   "rewrites": [
     {
-      "source": "/(.*)",
-      "destination": "/index.html"
+      "source": "/11labs",
+      "destination": "/11labs/index.html"
+    },
+    {
+      "source": "/11labs/(.*)",
+      "destination": "/11labs/index.html"
     }
   ]
 }

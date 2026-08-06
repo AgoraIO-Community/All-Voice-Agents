@@ -8,5 +8,5 @@ const frontendDirectory = dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig({
   envDir: resolve(frontendDirectory, "../.."),
-  plugins: [react(), microfrontends()],
+  plugins: [react(), microfrontends({ basePath: "/11labs" })],
 });
