@@ -58,11 +58,13 @@ ELEVENLABS_CONCIERGE_AGENT_ID=agent_yyyyy
 `HOST`, `PORT`, and `CORS_ORIGIN` are optional. The backend defaults to
 `127.0.0.1:4000` and allows local development when they are omitted.
 
-The frontend example points to the local backend:
+For a deployed frontend, set the API URL to your Railway backend service:
 
 ```dotenv
-VITE_API_URL=http://127.0.0.1:4000
+VITE_API_URL=https://your-service-name.up.railway.app
 ```
+
+For local development, use `VITE_API_URL=http://127.0.0.1:4000` instead.
 
 Start both workspaces:
 
