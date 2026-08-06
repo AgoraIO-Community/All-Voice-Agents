@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "skills": {
+    "agents": {
+      "source": "elevenlabs/skills",
+      "sourceType": "github",
+      "skillPath": "agents/SKILL.md",
+      "computedHash": "f7ce07e26fc3be65ab122139fee5be6cce3d9666dde75acf03d6daf4d41ba8f6"
+    }
+  }
+}
