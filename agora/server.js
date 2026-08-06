@@ -1,11 +1,13 @@
-require('dotenv').config();
-
 const crypto = require('crypto');
 const fs = require('fs');
 const path = require('path');
+const dotenv = require('dotenv');
 const express = require('express');
 const fetch = require('node-fetch');
 const { RtcTokenBuilder, RtcRole } = require('agora-token');
+
+dotenv.config();
+dotenv.config({ path: path.join(__dirname, '.env') });
 
 const debtCollectionPrompt = fs.readFileSync(
   path.join(__dirname, 'debt-collection-voice-agent-prompt.md'),
@@ -105,14 +107,14 @@ function fullAgentConfig(value, channel, userUid) {
   };
 }
 
-function debtCollectionAgentPayload() {
+function debtCollectionAgentPayload(channel, userUid) {
   return {
     name: `debt-collection-voice-agent-${crypto.randomUUID()}`,
     properties: {
-      channel: 'testchan',
-      token: buildToken('testchan', 20009),
+      channel,
+      token: buildToken(channel, 20009),
       agent_rtc_uid: '20009',
-      remote_rtc_uids: ['*'],
+      remote_rtc_uids: [String(userUid)],
       idle_timeout: 20,
       asr: {
         credential_mode: 'managed',
@@ -130,12 +132,16 @@ function debtCollectionAgentPayload() {
         greeting_message: 'Hello, this is Maya calling from the bank. This call may be recorded for quality and training purposes. Am I speaking with Samayak?',
         greeting_configs: { mode: 'single_first', delay_ms: 0, interruptable: false },
         failure_message: 'Sorry, I am having trouble responding right now. Please give me a moment.',
-        params: { model: 'gpt-4.1' },
+        params: { model: 'gpt-4o-mini' },
       },
       tts: {
         credential_mode: 'managed',
-        vendor: 'microsoft',
-        params: { region: 'eastus', voice_name: 'en-US-AndrewMultilingualNeural', speed: 1.2, volume: 100, sample_rate: 24000 },
+        vendor: 'minimax',
+        params: {
+          url: 'wss://api.minimax.io/ws/v1/t2a_v2',
+          model: 'speech-2.6-turbo',
+          voice_setting: { voice_id: 'English_captivating_female1' },
+        },
         skip_patterns: [3, 4, 5],
       },
       turn_detection: { mode: 'default', config: { speech_threshold: 0.5, start_of_speech: { mode: 'vad', vad_config: { interrupt_duration_ms: 160, speaking_interrupt_duration_ms: 240, prefix_padding_ms: 800 } }, end_of_speech: { mode: 'semantic', semantic_config: { silence_duration_ms: 320, max_wait_ms: 3000, pause_state_enabled: true } } } },
@@ -179,7 +185,7 @@ app.post('/api/sessions', async (request, response) => {
   const agentToken = buildToken(channel, agentUid);
 
   const customPayload = fullAgentConfig(request.body.fullConfig, channel, userUid);
-  const payload = customPayload || (preset === 'debt-collection-voice-agent' ? debtCollectionAgentPayload() : {
+  const payload = customPayload || (preset === 'debt-collection-voice-agent' ? debtCollectionAgentPayload(channel, userUid) : {
     name,
     properties: {
       channel,
@@ -241,9 +247,9 @@ app.post('/api/sessions', async (request, response) => {
       agentName: 'Maya',
       language: 'en-IN',
       asrModel: 'nova-3',
-      llmModel: 'gpt-4.1',
-      ttsModel: 'microsoft',
-      voiceId: 'en-US-AndrewMultilingualNeural',
+      llmModel: 'gpt-4o-mini',
+      ttsModel: 'speech-2.6-turbo',
+      voiceId: 'English_captivating_female1',
       systemPrompt: debtCollectionPrompt,
       greeting: 'Hello, this is Maya calling from the bank. This call may be recorded for quality and training purposes. Am I speaking with Samayak?',
       maxHistory: 32,
