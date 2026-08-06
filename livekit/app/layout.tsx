@@ -3,7 +3,7 @@ import "./globals.css";
 
 const PROVIDERS = [
   { href: "/11labs", label: "ElevenLabs" },
-  { href: "/livekit", label: "LiveKit" },
+  { href: "https://livekit-voiceagent.vercel.app/", label: "LiveKit" },
   { href: "/vapi", label: "Vapi" },
   { href: "/agora", label: "Agora" },
 ] as const;

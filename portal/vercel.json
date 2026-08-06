@@ -1,21 +1,17 @@
 {
-  "rewrites": [
+  "redirects": [
     {
       "source": "/livekit",
-      "destination": "https://livekit-voiceagent.vercel.app/"
+      "destination": "https://livekit-voiceagent.vercel.app/",
+      "permanent": false
     },
     {
       "source": "/livekit/:path*",
-      "destination": "https://livekit-voiceagent.vercel.app/:path*"
-    },
-    {
-      "source": "/api/:path*",
-      "destination": "https://livekit-voiceagent.vercel.app/api/:path*"
-    },
-    {
-      "source": "/icon.svg",
-      "destination": "https://livekit-voiceagent.vercel.app/icon.svg"
-    },
+      "destination": "https://livekit-voiceagent.vercel.app/",
+      "permanent": false
+    }
+  ],
+  "rewrites": [
     {
       "source": "/(.*)",
       "destination": "/index.html"
