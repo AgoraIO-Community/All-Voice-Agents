@@ -1,13 +1,13 @@
 import { createServer, type IncomingMessage, type ServerResponse } from "node:http";
 import { URL } from "node:url";
 import "./env.js";
-import { HttpError } from "./http-error.js";
 import {
   createVoiceSession,
+  HttpError,
   isElevenLabsAgentKey,
   isVoiceVendor,
   listVoiceProviders,
-} from "./voice.js";
+} from "@repo/elevenlabs-server";
 
 const defaultHost = process.env.RAILWAY_ENVIRONMENT ? "0.0.0.0" : "127.0.0.1";
 const host = process.env.HOST ?? defaultHost;
