@@ -1,31 +1,5 @@
-export type ApiHealth = {
-  service: string;
-  status: "ok";
-  uptimeSeconds: number;
-  timestamp: string;
-};
-
-export type ApiSummary = {
-  title: string;
-  message: string;
-  features: string[];
-};
-
 export type VoiceVendor = "elevenlabs" | "pipecat";
 export type VoiceAgent = "maya" | "aarav";
-
-export type VoiceProvider = {
-  id: VoiceVendor;
-  label: string;
-  description: string;
-  enabled: boolean;
-  configured: boolean;
-  setup: string[];
-};
-
-export type VoiceProvidersResponse = {
-  providers: VoiceProvider[];
-};
 
 export type VoiceSessionResponse = {
   vendor: "elevenlabs";
@@ -35,7 +9,9 @@ export type VoiceSessionResponse = {
   createdAgent: boolean;
 };
 
-const API_URL = import.meta.env.VITE_API_URL ?? "http://localhost:4000";
+const configuredApiUrl = import.meta.env.VITE_API_URL?.trim().replace(/\/+$/, "");
+const API_URL =
+  configuredApiUrl || (import.meta.env.DEV ? "http://127.0.0.1:4000" : "");
 
 async function fetchJson<T>(
   path: string,
@@ -68,18 +44,6 @@ async function getErrorMessage(response: Response) {
   }
 
   return `Request failed with ${response.status}`;
-}
-
-export function getHealth(signal?: AbortSignal) {
-  return fetchJson<ApiHealth>("/health", { signal });
-}
-
-export function getSummary(signal?: AbortSignal) {
-  return fetchJson<ApiSummary>("/api/summary", { signal });
-}
-
-export function getVoiceProviders(signal?: AbortSignal) {
-  return fetchJson<VoiceProvidersResponse>("/api/voice/providers", { signal });
 }
 
 export function createVoiceSession(vendor: VoiceVendor, agent: VoiceAgent) {
