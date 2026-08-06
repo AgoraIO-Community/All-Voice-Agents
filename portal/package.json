@@ -5,12 +5,15 @@
   "private": true,
   "scripts": {
     "dev": "vite --host 127.0.0.1 --port 5173",
+    "prebuild": "npm run build --workspace @repo/elevenlabs-server",
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview --host 127.0.0.1 --port 5173",
     "lint": "eslint . --max-warnings 0",
+    "precheck-types": "npm run build --workspace @repo/elevenlabs-server",
     "check-types": "tsc --noEmit"
   },
   "dependencies": {
+    "@repo/elevenlabs-server": "*",
     "@repo/provider-navigation": "*",
     "@vercel/microfrontends": "^2.4.0",
     "react": "^19.2.0",
