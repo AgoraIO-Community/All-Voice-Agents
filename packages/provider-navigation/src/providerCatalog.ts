@@ -31,6 +31,9 @@ export const PROVIDERS: readonly ProviderDefinition[] = [
     name: "Vapi",
     description: "Hosted voice infrastructure comparison slot.",
     path: "/vapi",
+    // An upstream rewrite forwards /vappi rather than /vapi, so link there.
+    // Remove once that rewrite is corrected; the portal aliases both paths.
+    href: "/vappi",
     status: "coming-soon",
   },
   {
