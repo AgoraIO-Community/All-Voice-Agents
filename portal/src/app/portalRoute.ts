@@ -10,6 +10,9 @@ const PROVIDER_ROUTES: Readonly<Record<string, PortalProviderId>> = {
   "/agora": "agora",
   "/livekit": "livekit",
   "/vapi": "vapi",
+  // Alias for a misspelled upstream rewrite that forwards /vappi here.
+  // Remove once that rewrite points at /vapi.
+  "/vappi": "vapi",
 };
 
 function normalizePathname(pathname: string): string {
